@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="Nina&#39;s Blog">
 <meta property="og:description" content="定义函数定义函数的几种方法： 1.函数声明：如果完整语句块以function开头，那么就是函数声明。该方法不能省略函数名（会污染作用域），并且需要显示地通过函数名调用才能运行其中的代码。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-17T03:11:41.471Z">
+<meta property="og:updated_time" content="2018-10-20T07:34:21.998Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="函数">
 <meta name="twitter:description" content="定义函数定义函数的几种方法： 1.函数声明：如果完整语句块以function开头，那么就是函数声明。该方法不能省略函数名（会污染作用域），并且需要显示地通过函数名调用才能运行其中的代码。">
@@ -412,12 +412,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function test() &#123;</span><br><span class="line"></span><br><span class="line">//to do</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
 <p>2.函数表达式：如果完整语句块不以function开头，那么就是函数表达式。</p>
 <ul>
-<li>匿名函数表达式：<code>var add = function () {// to do};</code>书写起来简答快捷，很多库和工具倾向鼓励使用。但仍然有几点缺点：</li>
-</ul>
+<li><p>匿名函数表达式：<code>var add = function () {// to do};</code>书写起来简答快捷，很多库和工具倾向鼓励使用。但仍然有几点缺点：</p>
 <p>a.匿名函数调试困难；</p>
 <p>b.难以引用自身，引用时需要使用已过期的argument.callee（是一个执行正在执行的函数的指针）；</p>
 <p>c.可读性不强，函数名对于代码可读性/可理解性很重要。</p>
-<ul>
+</li>
 <li><p>立即执行函数<code>(function() {//to do})()</code>（IIFE通过声明并立即执行一个函数来创建作用域）；</p>
 </li>
 <li><p>命名函数表达式<code>var add = function test() {//to do}</code>；</p>
@@ -429,7 +428,7 @@
 <p>函数声明中的<code>test</code>被绑定在所处的作用域中，可以用<code>test()</code>直接调用。而函数表达式中（命名函数表达式）的<code>test</code>则被绑定在函数表达式自身的作用域中而不是所在作用域中。故如下代码中在外层作用域中调用<code>bar()</code>抛<code>ReferenceError</code>的错误。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var foo = function bar(i) &#123;</span><br><span class="line"></span><br><span class="line"> console.log(i);</span><br><span class="line"></span><br><span class="line"> if (i === 1) &#123;bar(2);&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">foo(1);// 1 2</span><br><span class="line"></span><br><span class="line">bar(1);//ReferenceError</span><br></pre></td></tr></table></figure>
 <h1 id="函数提升-VS-变量提升"><a href="#函数提升-VS-变量提升" class="headerlink" title="函数提升 VS 变量提升"></a>函数提升 VS 变量提升</h1><p>函数提升优先级<strong>高于</strong>变量提升，且不会被变量声明覆盖，但是会被变量赋值覆盖。重复声明函数的情况下，声明靠后的函数会覆盖之前的函数声明。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//无论 `var foo;`语句在函数声明前或函数声明后，都不影响第2行`foo();`的执行结果。</span><br><span class="line"></span><br><span class="line">foo(); // &quot;函数提升优先级高&quot;</span><br><span class="line"></span><br><span class="line">function foo() &#123;</span><br><span class="line"></span><br><span class="line">    console.log(&quot;函数提升优先级高&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo;</span><br><span class="line"></span><br><span class="line">foo = function () &#123;</span><br><span class="line">    console.log(&quot;变量赋值能覆盖函数声明&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(); // &quot;变量赋值能覆盖函数声明&quot;</span><br><span class="line"></span><br><span class="line">foo = &apos;test&apos;;</span><br><span class="line"></span><br><span class="line">foo; //&quot;test&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//无论 var foo;语句在函数声明前或函数声明后，都不影响第2行foo();的执行结果。</span><br><span class="line">foo(); // &quot;函数提升优先级高&quot;</span><br><span class="line"></span><br><span class="line">function foo() &#123;</span><br><span class="line">    console.log(&quot;函数提升优先级高&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo;</span><br><span class="line"></span><br><span class="line">foo = function () &#123;</span><br><span class="line">    console.log(&quot;变量赋值能覆盖函数声明&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(); // &quot;变量赋值能覆盖函数声明&quot;</span><br><span class="line"></span><br><span class="line">foo = &apos;test&apos;;</span><br><span class="line"></span><br><span class="line">foo; //&quot;test&quot;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bar (); // &quot;后来居上：）&quot;</span><br><span class="line"></span><br><span class="line">function bar() &#123;</span><br><span class="line"></span><br><span class="line">    console.log(&quot;我被覆盖了&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function bar() &#123;</span><br><span class="line"></span><br><span class="line">    console.log(&quot;后来居上：）&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
@@ -460,6 +459,22 @@
       
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/20/this/" rel="prev" title="This">
+                This <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -530,7 +545,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -560,7 +575,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
