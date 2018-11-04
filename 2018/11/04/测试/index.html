@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="关于this当一个函数被调用时，会创建一个活动记录（有时又叫做执行上下文），记录关于函数在哪里被调用（调用栈），调用的方式，传入的参数等信息。this就是这条记录的一个属性，会在函数执行的过程中用到。 this既不指向函数自身也不指向函数的词法作用域。">
-<meta name="keywords" content="this">
+  <meta name="description" content="本文介绍了测试相关的知识，包括Node assert的用法、should.js、mocha、karma以及Travis CI；还了解了TDD和BDD的含义与差别。">
+<meta name="keywords" content="测试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="This">
-<meta property="og:url" content="http://yoursite.com/2018/10/20/this/index.html">
+<meta property="og:title" content="测试工具简介">
+<meta property="og:url" content="http://yoursite.com/2018/11/04/测试/index.html">
 <meta property="og:site_name" content="Nina&#39;s Blog">
-<meta property="og:description" content="关于this当一个函数被调用时，会创建一个活动记录（有时又叫做执行上下文），记录关于函数在哪里被调用（调用栈），调用的方式，传入的参数等信息。this就是这条记录的一个属性，会在函数执行的过程中用到。 this既不指向函数自身也不指向函数的词法作用域。">
+<meta property="og:description" content="本文介绍了测试相关的知识，包括Node assert的用法、should.js、mocha、karma以及Travis CI；还了解了TDD和BDD的含义与差别。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-20T08:27:11.323Z">
+<meta property="og:updated_time" content="2018-11-04T02:24:20.659Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="This">
-<meta name="twitter:description" content="关于this当一个函数被调用时，会创建一个活动记录（有时又叫做执行上下文），记录关于函数在哪里被调用（调用栈），调用的方式，传入的参数等信息。this就是这条记录的一个属性，会在函数执行的过程中用到。 this既不指向函数自身也不指向函数的词法作用域。">
+<meta name="twitter:title" content="测试工具简介">
+<meta name="twitter:description" content="本文介绍了测试相关的知识，包括Node assert的用法、should.js、mocha、karma以及Travis CI；还了解了TDD和BDD的含义与差别。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/10/20/this/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/04/测试/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>This | Nina's Blog</title>
+  <title>测试工具简介 | Nina's Blog</title>
   
 
 
@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/20/this/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/04/测试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wang Yimei">
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">This
+          <h1 class="post-title" itemprop="name headline">测试工具简介
               
             
           </h1>
@@ -347,7 +347,7 @@
                 
               
 
-              <time title="创建时间：2018-10-20 15:34:59" itemprop="dateCreated datePublished" datetime="2018-10-20T15:34:59+08:00">2018-10-20</time>
+              <time title="创建时间：2018-11-04 10:19:19" itemprop="dateCreated datePublished" datetime="2018-11-04T10:19:19+08:00">2018-11-04</time>
             
 
             
@@ -365,7 +365,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/测试/" itemprop="url" rel="index"><span itemprop="name">测试</span></a></span>
 
                 
                 
@@ -407,39 +407,25 @@
       
 
       
-        <h1 id="关于this"><a href="#关于this" class="headerlink" title="关于this"></a>关于this</h1><p>当一个函数被调用时，会创建一个活动记录（有时又叫做执行上下文），记录关于函数在哪里被调用（调用栈），调用的方式，传入的参数等信息。this就是这条记录的一个属性，会在函数执行的过程中用到。</p>
-<p><strong>this既不指向函数自身也不指向函数的词法作用域。</strong><br><a id="more"></a></p>
-<h1 id="this全面解析"><a href="#this全面解析" class="headerlink" title="this全面解析"></a>this全面解析</h1><p>要确定函数执行过程中是如何绑定<code>this</code>的，需要首先找到函数的调用位置，再对其使用的规则进行判断。<code>this</code>的绑定有如下四个规则：</p>
-<ol>
-<li><p>默认绑定:</p>
-<p> 当函数调用类型为<strong>独立函数</strong>调用时，可以把这条规则看作是无法应用其他规则的默认规则，<code>this</code>绑定到全局对象；如果使用严格模式，则不能将全局对象用于默认绑定，因此<code>this</code>会绑定到<code>undefined</code>。</p>
-</li>
-<li><p>隐式绑定：</p>
-<p> 当函数通过对象属性间接引用（函数调用位置有上下文对象）如：<code>obj.foo()</code>，此时隐式绑定规则会将函数调用中的<code>this</code>绑定到这个上下文对象。<font color="#de3427">但无论是直接在obj中定义还是先定义再添加为引用属性，这个函数严格来说都不属于obj对象。如：<code>var bar = obj.foo;bar();</code>,此时<code>bar</code>引用的是<code>foo</code>函数自身，<code>bar()</code>其实是一个不带任何修饰的函数调用，此时应用默认绑定。</font><strong>对象属性引用链中只有上一层或者说最后一层在调用位置中起作用</strong>。<code>obj1.obj2.foo()</code>，此时<code>foo</code>中的<code>this</code>被绑定<code>obj2</code>。</p>
-</li>
-<li><p>显示绑定：</p>
-<p> 通过函数的<code>call()</code>和<code>apply()</code>方法指定<code>this</code>的绑定对象。</p>
-<pre><code>a. 硬绑定：`bind`方法是ES5内置的硬绑定方法。
-b. API调用的“上下文”：第三方库以及Javascript语言和宿主环境中许多新的内置函数，都提供来一些可选的参数，确保回调函数使用的`this`绑定到指定的“上下文”。例如：`[1,2,3].forEach(foo, obj);` 在调用`foo`时把`this`绑定到`obj`;
-</code></pre></li>
-<li><p>new绑定：</p>
-<p> 使用new来调用函数，或者说发生构造函数调用时，会自动执行下面的操作：</p>
-<pre><code>a. 创建（或者说构造）一个全新的对象。
-b. 这个全新的对象会被执行[[prototype]]连接。
-c. 这个新对象会被绑定到函数调用的`this`。
-d. 如果函数没有返回其他对象，那么new表达式中的函数调用会自动返回这个新对象。
-</code></pre></li>
-</ol>
-<h3 id="判断this应用规则的步骤："><a href="#判断this应用规则的步骤：" class="headerlink" title="判断this应用规则的步骤："></a>判断<code>this</code>应用规则的步骤：</h3><ul>
-<li>是否使用了<code>new</code>？使用了则应用<code>new</code>绑定。</li>
-<li>是否使用了<code>call</code>或者<code>apply</code> 或者<code>bind</code>? 使用了则应用显示绑定。</li>
-<li>函数调用位置是否有上下文对象? 使用了则应用隐式绑定。</li>
-<li>最后默认绑定，如果是<code>strict mode</code> 则绑定到<code>undefined</code>，否则绑定到全局。</li>
+        <p>本文介绍了测试相关的知识，包括Node assert的用法、should.js、mocha、karma以及Travis CI；还了解了TDD和BDD的含义与差别。<br><a id="more"></a></p>
+<h2 id="assert"><a href="#assert" class="headerlink" title="assert"></a>assert</h2><p>assert模块是Node的内置模块，主要用于断言。如果表达式不符合预期，就抛出一个错误。本周主要学习了以下方法：</p>
+<ul>
+<li><code>assert.equal(actual, expected, [message])</code>：该方法内部使用相等运算符<code>==</code>进行比较；</li>
+<li><code>assert.deepEqual(actual, expected, [message])</code>：该方法用来比较两个对象，只要它们的属性一一对应且值相等，就认为两对象相等，否则就跑出了一个错误；</li>
+<li><code>assert.throws(block, [error], [message])</code>：该方法预期某个代码块会抛出错误，且抛出的错误符合一定的条件；<h2 id="should-js"><a href="#should-js" class="headerlink" title="should.js"></a>should.js</h2><code>should.js</code>是小而精巧的测试框架，其中<code>assertion.js</code>为<code>should.js</code>中的类，负责对测试信息进行记录。到目前为止只见识了should.js的链式调用，但对于如何编写链式调用尚需研究学习。虽看过should.js的API以及接触过should.js的测试用例。但自己编写还存在很大的问题。感觉用起来力不从心。</li>
 </ul>
-<p>ES6新增箭头函数中的<code>this</code>不使用以上四个标准规则，而是根据当前的词法作用域来决定<code>this</code>,即箭头函数会继承外层函数调用的this绑定（无论this绑定到什么）。</p>
-<blockquote>
-<p>箭头函数中<code>this</code>指向的固定化，实际原因是因为箭头函数根本没有自己的<code>this</code>，导致内部的<code>this</code>就是外层代码块的<code>this</code>。因此箭头函数不能用作构造函数。</p>
-</blockquote>
+<h2 id="mocha"><a href="#mocha" class="headerlink" title="mocha"></a>mocha</h2><p><code>mocha</code>是javascript测试框架，在浏览器和node环境都可以使用。<code>mocha</code>的作用是运行测试脚本，测试脚本里应包含一个或多个<code>describe</code>块，每个<code>describe</code>块应该包含一个或多个<code>it</code>块。<br><code>describe</code>块称为“测试套件”，表示一组相关的测试，它是一个函数，第一个参数是测试套件的名称，第二个参数是一个实际执行的函数。<br><code>it</code>块称为“测试用例”，表示一个单独的测试，是测试的最小单位，它也是一个函数，第一个参数是测试用例的名称，第二个参数是一个实际执行的函数。<br>更多关于mocha的信息见<a href="http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">describe(&apos;Array&apos;, function() &#123;</span><br><span class="line">  describe(&apos;#indexOf()&apos;, function() &#123;</span><br><span class="line">    it(&apos;should return -1 when the value is not present&apos;, function() &#123;</span><br><span class="line">      assert.equal(-1, [1, 2, 3].indexOf(-1)/* 填空题 */)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="karma"><a href="#karma" class="headerlink" title="karma"></a>karma</h2><p><code>karma</code>是由Google团队开发的一套前端测试运行框架。它不同于测试框架<code>mocha</code>,它运行在这些测试框架之上，主要完成以下工作：</p>
+<ol>
+<li>Karma启动一个Web服务器，生成包含js源代码和js测试脚本的页面；</li>
+<li>运行浏览器加载页面，并显示测试的结果；</li>
+<li>如果开启检测，则当文件有修改时，继续执行以上过程。</li>
+</ol>
+<p>其中运行<code>karma init</code>用来初始化测试环境；<code>karma start</code>查看运行的结果。</p>
+<h2 id="Travis-CI"><a href="#Travis-CI" class="headerlink" title="Travis CI"></a>Travis CI</h2><p><code>Travis CI</code>是一个持续集成工具，托管在Github上的项目可以使用它来做集成测试。使用前需要根据官网说明在项目根目录下创建<code>.trvis.yml</code>文件，并进行配置。基本配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">language: node_js</span><br><span class="line">node_js:</span><br><span class="line">  - &quot;8&quot;</span><br><span class="line">before_install:</span><br><span class="line">   - npm i -g mocha</span><br></pre></td></tr></table></figure></p>
+<p>集成测试需要在浏览器中完成，则配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo: required</span><br><span class="line">dist: trusty</span><br><span class="line">language: node_js</span><br><span class="line">node_js:</span><br><span class="line">  - &quot;8&quot;</span><br><span class="line">before_script:</span><br><span class="line">  - &quot;export DISPLAY=:99.0&quot;</span><br><span class="line">  - &quot;sh -e /etc/init.d/xvfb start&quot;</span><br><span class="line">before_install:</span><br><span class="line">  - npm install -g karma-cli</span><br></pre></td></tr></table></figure></p>
+<p>karma中还需修改<code>singleRun</code>为<code>process.env.CI</code>.</p>
+<h2 id="TDD与BDD"><a href="#TDD与BDD" class="headerlink" title="TDD与BDD"></a>TDD与BDD</h2><p>TDD（test-driven development）：在编写代码前先编写测试，每次测试之后，进行代码重构，然后再执行测试。<br>BDD（behavio-dirven development）：专注与客户和开发者的系统行为，偏向于不断测试的实践来引导客户进行测试阶段，并通过逐步关注其行为进行认证。</p>
 
       
     </div>
@@ -460,7 +446,7 @@ d. 如果函数没有返回其他对象，那么new表达式中的函数调用�
       
         <div class="post-tags">
           
-            <a href="/tags/this/" rel="tag"># this</a>
+            <a href="/tags/测试/" rel="tag"># 测试</a>
           
         </div>
       
@@ -473,8 +459,8 @@ d. 如果函数没有返回其他对象，那么new表达式中的函数调用�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/14/函数/" rel="next" title="函数">
-                <i class="fa fa-chevron-left"></i> 函数
+              <a href="/2018/10/20/this/" rel="next" title="This">
+                <i class="fa fa-chevron-left"></i> This
               </a>
             
           </div>
@@ -482,10 +468,6 @@ d. 如果函数没有返回其他对象，那么new表达式中的函数调用�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/04/测试/" rel="prev" title="测试工具简介">
-                测试工具简介 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -631,7 +613,7 @@ d. 如果函数没有返回其他对象，那么new表达式中的函数调用�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于this"><span class="nav-number">1.</span> <span class="nav-text">关于this</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#this全面解析"><span class="nav-number">2.</span> <span class="nav-text">this全面解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断this应用规则的步骤："><span class="nav-number">2.0.1.</span> <span class="nav-text">判断this应用规则的步骤：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#assert"><span class="nav-number">1.</span> <span class="nav-text">assert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#should-js"><span class="nav-number">2.</span> <span class="nav-text">should.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mocha"><span class="nav-number">3.</span> <span class="nav-text">mocha</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#karma"><span class="nav-number">4.</span> <span class="nav-text">karma</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Travis-CI"><span class="nav-number">5.</span> <span class="nav-text">Travis CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TDD与BDD"><span class="nav-number">6.</span> <span class="nav-text">TDD与BDD</span></a></li></ol></div>
             
 
           </div>
