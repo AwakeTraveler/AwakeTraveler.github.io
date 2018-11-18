@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="Nina&#39;s Blog">
 <meta property="og:description" content="关于this当一个函数被调用时，会创建一个活动记录（有时又叫做执行上下文），记录关于函数在哪里被调用（调用栈），调用的方式，传入的参数等信息。this就是这条记录的一个属性，会在函数执行的过程中用到。 this既不指向函数自身也不指向函数的词法作用域。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-18T03:27:31.680Z">
+<meta property="og:updated_time" content="2018-11-18T03:30:11.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="This">
 <meta name="twitter:description" content="关于this当一个函数被调用时，会创建一个活动记录（有时又叫做执行上下文），记录关于函数在哪里被调用（调用栈），调用的方式，传入的参数等信息。this就是这条记录的一个属性，会在函数执行的过程中用到。 this既不指向函数自身也不指向函数的词法作用域。">
@@ -440,7 +440,7 @@ d. 如果函数没有返回其他对象，那么new表达式中的函数调用�
 <blockquote>
 <p>箭头函数中<code>this</code>指向的固定化，实际原因是因为箭头函数根本没有自己的<code>this</code>，导致内部的<code>this</code>就是外层代码块的<code>this</code>。因此箭头函数不能用作构造函数。</p>
 </blockquote>
-<p><strong>关于《你不知道的JS》2.2.2节中提到的setTimeout的传入函数this的问题，书里说回调函数在执行时context为全局对象，所以this指向全局。</strong>（该部分内容见）[<a href="https://www.aliyun.com/jiaocheng/992147.html]" target="_blank" rel="noopener">https://www.aliyun.com/jiaocheng/992147.html]</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(funciton() &#123;</span><br><span class="line">    console.log(this)</span><br><span class="line">&#125;, 200)</span><br></pre></td></tr></table></figure></p>
+<p><strong>关于《你不知道的JS》2.2.2节中提到的setTimeout的传入函数this的问题，书里说回调函数在执行时context为全局对象，所以this指向全局。</strong><a href="https://www.aliyun.com/jiaocheng/992147.html" target="_blank" rel="noopener">该部分内容见</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(funciton() &#123;</span><br><span class="line">    console.log(this)</span><br><span class="line">&#125;, 200)</span><br></pre></td></tr></table></figure></p>
 <p>在浏览器中，上述代码确实指向window。但在node中，上述代码输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Timeout &#123;</span><br><span class="line">  _called: true,</span><br><span class="line">  _idleTimeout: 1000,</span><br><span class="line">  _idlePrev: null,</span><br><span class="line">  _idleNext: null,</span><br><span class="line">  _idleStart: 142,</span><br><span class="line">  _onTimeout: [Function],</span><br><span class="line">  _timerArgs: undefined,</span><br><span class="line">  _repeat: null,</span><br><span class="line">  _destroyed: false,</span><br><span class="line">  [Symbol(asyncId)]: 6,</span><br><span class="line">  [Symbol(triggerAsyncId)]: 1 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>所以，在node环境中，输出的是一个Timeout实例对象，查看node源码，在node/timers.js中有着setTimeout的实现，大概是这样：<br>有一个Timeout构造函数，用来构造构造定时器对象，用一个链表存着所有Timeout实例，也就是每次执行暴露出来的setTimeout，都会在链表中插入一个Timeout实例。</p>
 
